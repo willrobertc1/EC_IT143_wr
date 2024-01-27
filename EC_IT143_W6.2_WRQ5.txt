@@ -1,0 +1,28 @@
+
+NAME: William Robert Cabral   
+PURPOSE: To list the names of all products along with their list prices in descending order of list price
+MODIFICATION LOG:
+Ver      Date        Author        Description
+-----   ----------   -----------   -------------------------------------------------------------------------------
+1.0     01/25/2024   William       1. Built this script for EC IT443
+
+
+RUNTIME: 
+T12:06:35.2723552-03:00
+
+
+NOTES:
+ 
+I built this script to list the names of all products along with their list prices in descending order of list price
+-- Q1: list the names of all products along with their list prices in descending order of list price
+
+-- A1: 
+SELECT 
+    Name AS ProductName,
+    ListPrice
+FROM 
+    Production.Product
+ORDER BY 
+    ListPrice DESC;
+
+

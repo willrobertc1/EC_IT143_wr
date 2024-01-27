@@ -1,0 +1,27 @@
+
+NAME: William Robert Cabral   
+PURPOSE: To create a list of tables that contain BuisnessEntityID?
+MODIFICATION LOG:
+Ver      Date        Author        Description
+-----   ----------   -----------   -------------------------------------------------------------------------------
+1.0     01/25/2024   William       1. Built this script for EC IT443
+
+
+RUNTIME: 
+T11:58:12.8719309-03:00
+
+
+NOTES:
+ 
+I built this script to create a list of tables that contain BuisnessEntityID?
+-- Q1: Can you create a list of tables that contain BuisnessEntityID?
+
+-- A1: 
+SELECT 
+    TABLE_NAME
+FROM 
+    INFORMATION_SCHEMA.COLUMNS
+WHERE 
+    COLUMN_NAME = 'BusinessEntityID';
+
+

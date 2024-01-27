@@ -1,0 +1,29 @@
+
+NAME: William Robert Cabral   
+PURPOSE: To identify tables in AdventureWorks that have sub-query or Foreign Key constraints
+MODIFICATION LOG:
+Ver      Date        Author        Description
+-----   ----------   -----------   -------------------------------------------------------------------------------
+1.0     01/25/2024   William       1. Built this script for EC IT443
+
+
+RUNTIME: 
+T11:56:05.5741905-03:00
+
+NOTES:
+ 
+I built this script to identify tables in AdventureWorks that have sub-query or Foreign Key constraints
+-- Q1: Can you identify tables in AdventureWorks that have sub-query or Foreign Key constraints? 
+
+-- A1: 
+SELECT 
+    fk.name AS ForeignKeyName,
+    tp.name AS TableName,
+    ref.name AS ReferencedTableName
+FROM 
+    sys.foreign_keys fk
+JOIN 
+    sys.tables tp ON fk.parent_object_id = tp.object_id
+JOIN 
+    sys.tables ref ON fk.referenced_object_id = ref.object_id;
+

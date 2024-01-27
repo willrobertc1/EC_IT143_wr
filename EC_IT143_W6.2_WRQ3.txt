@@ -1,0 +1,30 @@
+
+NAME: William Robert Cabral   
+PURPOSE: provide the total earnings for the last year (2014)
+
+MODIFICATION LOG:
+Ver      Date        Author        Description
+-----   ----------   -----------   -------------------------------------------------------------------------------
+1.0     01/25/2024   William       1. Built this script for EC IT443
+
+
+RUNTIME: 
+T11:44:32.9564481-03:00
+
+NOTES: 
+This is where I talk about what this script is, why I built it, and other stuff...
+ 
+I built this script to provide the total earnings for the last year (2014).  
+
+-- Q1: In a couple of days, we will receive auditors, and they are interested in our revenues, so please show me the total earnings for the last year (2014).  
+
+-- A1: 
+SELECT 
+    SUM(sod.LineTotal) AS TotalEarnings
+FROM 
+    Sales.SalesOrderDetail sod
+JOIN 
+    Sales.SalesOrderHeader soh ON sod.SalesOrderID = soh.SalesOrderID
+WHERE 
+    YEAR(soh.OrderDate) = 2014;
+

@@ -1,0 +1,31 @@
+/*****************************************************************************************************************
+NAME: William Robert Cabral   
+PURPOSE: provide the total quantity of 'Helmets' sold in the AdventureWorks store
+
+MODIFICATION LOG:
+Ver      Date        Author        Description
+-----   ----------   -----------   -------------------------------------------------------------------------------
+1.0     01/26/2024   William      1. Built this script for EC IT443
+
+
+RUNTIME: 
+T11:32:59.1756416-03:00
+
+NOTES: 
+ 
+I built this script to provide total quantity of 'Helmets' sold in the AdventureWorks store
+
+-- Q1: What is the total quantity of 'Helmets' sold in the AdventureWorks store?
+
+-- A1: 
+
+SELECT 
+    SUM(sod.OrderQty) AS TotalQuantity
+FROM 
+    Sales.SalesOrderDetail sod
+INNER JOIN 
+    Production.Product p ON sod.ProductID = p.ProductID
+INNER JOIN 
+    Production.ProductSubcategory ps ON p.ProductSubcategoryID = ps.ProductSubcategoryID
+WHERE 
+    ps.Name = 'Helmets';

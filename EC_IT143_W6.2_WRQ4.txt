@@ -1,0 +1,27 @@
+
+NAME: William Robert Cabral   
+PURPOSE: To find a list of tables that contain a column named "CustomerID" in the AdventureWorks database
+
+MODIFICATION LOG:
+Ver      Date        Author        Description
+-----   ----------   -----------   -------------------------------------------------------------------------------
+1.0     01/25/2024   William       1. Built this script for EC IT443
+
+
+RUNTIME: 
+T11:48:10.1551990-03:00
+
+NOTES:
+ 
+I built this script to find a list of tables that contain a column named "CustomerID" in the AdventureWorks database
+
+-- Q1: I'm in the process of creating new tables, and I would like to see a list of tables that contain a column called "CustomerID." 
+
+-- A1: 
+SELECT 
+    TABLE_NAME
+FROM 
+    INFORMATION_SCHEMA.COLUMNS
+WHERE 
+    COLUMN_NAME = 'CustomerID';
+

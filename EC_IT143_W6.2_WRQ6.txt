@@ -1,0 +1,30 @@
+
+NAME: William Robert Cabral   
+PURPOSE: To retrieve the total sales amount for each year
+MODIFICATION LOG:
+Ver      Date        Author        Description
+-----   ----------   -----------   -------------------------------------------------------------------------------
+1.0     01/25/2024   William       1. Built this script for EC IT443
+
+
+RUNTIME: 
+T12:04:41.4563261-03:00
+
+
+NOTES:
+ 
+I built this script to retrieve the total sales amount for each year
+-- Q1: Retrieve the total sales amount for each year
+
+-- A1: 
+SELECT 
+    YEAR(OrderDate) AS OrderYear,
+    SUM(TotalDue) AS TotalSalesAmount
+FROM 
+    Sales.SalesOrderHeader
+GROUP BY 
+    YEAR(OrderDate)
+ORDER BY 
+    OrderYear;
+
+
