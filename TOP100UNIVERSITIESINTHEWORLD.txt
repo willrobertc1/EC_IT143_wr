@@ -1,0 +1,146 @@
+
+
+--STEP 1 - CREATE A QUESTION
+--Q:What are the top 10 universities in the world according to the "Rank" column in the database for the year 2024?
+
+--STEP 2 CREATE AN ANSWER
+-- A: the key information needed is from the "Rank" column and that I want to retrieve data for the top 10 universities.
+
+--STEP 3 - CREATE AN ADHOC SQL QUERY
+USE [EC_IT143_DA]
+GO
+
+SELECT TOP 10
+    [rank],
+    [university]
+FROM
+    [dbo].[top 100 world university 2024]
+ORDER BY
+    [column1];
+
+--4 -- Turn the AdHock Query into a view 
+Ver Date     Author   Description
+--- ---------- -------- -----------------------------------------------------------
+1.0 02/02/2024 William Robert Initial script creation for EC IT143_DA
+-------------------------------------------------------------------------------
+RUNTIME:
+21:25:28
+NOTES:
+This script creates a view named [dbo].[Top10Universities2024] in the database
+[EC_IT143_DA]. The view retrieves the top 10 universities based on their ranks
+from the table [dbo].[top 100 world university 2024]. This view can be useful
+for quick access to information about the top universities in 2024.
+
+***********************************************************************************
+*******************************/
+
+USE [EC_IT143_DA]
+GO
+
+-- A1: The view definition goes here
+CREATE VIEW [dbo].[Top10Universities2024]
+AS
+SELECT TOP 10
+    [rank],
+    [university]
+FROM
+    [dbo].[top 100 world university 2024]
+ORDER BY
+    [column1]; 
+GO 
+
+-- Example query to test the view
+SELECT * FROM [dbo].[Top10Universities2024];
+
+5.1 - 5.2 - Turn the view into a table 
+
+
+
+USE [EC_IT143_DA]
+GO
+
+-- Step 5.1: Turn the view into a table
+SELECT TOP 0
+    [rank],
+    [university]
+INTO [dbo].[Top10UniversitiesTable]
+FROM [dbo].[Top10Universities2024];
+
+-- Step 5.2: Drop and recreate the table as needed
+IF OBJECT_ID('[dbo].[Top10UniversitiesTable]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Top10UniversitiesTable];
+
+SELECT TOP 0
+    [rank],
+    [university]
+INTO [dbo].[Top10UniversitiesTable]
+FROM [dbo].[Top10Universities2024];
+
+-- Step 5.3: Add a Primary Key
+ALTER TABLE [dbo].[Top10UniversitiesTable]
+ADD CONSTRAINT [PK_Top10UniversitiesTable] PRIMARY KEY ([rank]);
+
+-- Step 5.4: Add Constraints - Example: NOT NULL
+ALTER TABLE [dbo].[Top10UniversitiesTable]
+ALTER COLUMN [rank] [nvarchar](50) NOT NULL;
+
+
+
+--Step 6 --Load the table from the view using SQL SCRIPT
+
+USE [EC_IT143_DA]
+GO
+
+-- Step 6: Truncate the existing data in [dbo].[Top10UniversitiesTable]
+TRUNCATE TABLE [dbo].[Top10UniversitiesTable];
+
+-- Insert data from [dbo].[Top10Universities2024] into [dbo].[Top10UniversitiesTable]
+INSERT INTO [dbo].[Top10UniversitiesTable] ([rank], [university])
+SELECT [rank], [university]
+FROM [dbo].[Top10Universities2024];
+
+
+
+--Step 7 - Turn the Ad Hoc SQL script in a Stored Procedure
+/***********************************************************************************
+******************************
+NAME: EC_IT143_W8.1_Top10universities_s7_WR.sql
+PURPOSE: Create a stored procedure to load data from the view [dbo].[Top10Universities2024] into the table [dbo].[Top10UniversitiesTable]
+MODIFICATION LOG:
+Ver Date     Author   Description
+--- ---------- -------- -----------------------------------------------------------
+1.0 02/02/2024 [YourName] Initial stored procedure creation for EC IT143_DA
+-------------------------------------------------------------------------------
+RUNTIME:
+22:00:15
+NOTES:
+This stored procedure truncates the data in [dbo].[Top10UniversitiesTable] and then inserts
+data from the view [dbo].[Top10Universities2024] into it. Symmetry between table 
+and view names is maintained for logical flow.
+***********************************************************************************
+*******************************/
+
+CREATE PROCEDURE LoadTop10UniversitiesData
+AS
+BEGIN
+    -- Step 7: Truncate the existing data in [dbo].[Top10UniversitiesTable]
+    TRUNCATE TABLE [dbo].[Top10UniversitiesTable];
+
+    -- Insert data from [dbo].[Top10Universities2024] into [dbo].[Top10UniversitiesTable]
+    INSERT INTO [dbo].[Top10UniversitiesTable] ([rank], [university])
+    SELECT [rank], [university]
+    FROM [dbo].[Top10Universities2024];
+END;
+
+
+--step 8 -- Call the stored procedure
+
+
+
+--What are the top 10 universities in the world according to the "Rank" column in the database for the year 2024?
+
+-- the key information needed is from the "Rank" column and that I want to retrieve data for the top 10 universities.
+
+EXEC [dbo].[LoadTop10UniversitiesData];
+
+
