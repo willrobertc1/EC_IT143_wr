@@ -1,0 +1,203 @@
+/*****************************************************************************************************************
+NAME:    Top 100 universities in the world 2024
+PURPOSE: The purpose is to find answers provided by the table
+
+MODIFICATION LOG:
+Ver      Date        Author        Description
+-----   ----------   -----------   -------------------------------------------------------------------------------
+1.0     02/08/2024   William Robert       1. Built this script for EC IT440 Exercise 5.2
+
+
+RUNTIME: 
+T20:48:31
+
+NOTES: 
+This script was created to find several answers including top 5 universities in the world and the 
+employment rates of these universities. 
+ 
+******************************************************************************************************************/
+
+Q1.:(Another Student) I am a student and I want to make sure that the college I go to has a high employment rate after graduation. Can you please give me the top 10 schools with the highest employment rate and the degrees that were completed (if available)?
+
+A1.:
+USE [EC_IT143_DA]
+GO
+
+SELECT TOP 10
+    [rank],
+    [university],
+    [employment_outcomes]
+FROM
+    [dbo].[top 100 world university 2024]
+ORDER BY
+    [employment_outcomes] DESC;
+
+
+Q2.:(Me) 1. I’m a person who loves to study and I would really love to study in one of the
+top 5 universities in the world. What are the top 5 universities in the world
+based on their overall scores in the dataset?
+
+A2.:
+
+USE [EC_IT143_DA]
+GO
+
+SELECT TOP 5
+    [rank],
+    [university],
+    [overall_score]
+FROM
+    [dbo].[top 100 world university 2024]
+ORDER BY
+    [overall_score] DESC;
+
+
+Q3.:(Me) Currently I’m thinking about applying to one of the university around the
+world, but I would like to apply for a university that has high level of
+employment rates. Explore the employment rates of graduates from the top 50
+universities.
+
+A3.
+USE [EC_IT143_DA]
+GO
+
+SELECT TOP 50
+    [rank],
+    [university],
+    [employment_outcomes]
+FROM
+    [dbo].[top 100 world university 2024]
+ORDER BY
+    [overall_score] DESC;
+
+Q4.:(Me) Among the top 100 universities in the world in 2024, which universities have the highest ratio of international students to total students, and what are these ratios?
+
+A3.:
+
+SELECT TOP 5
+    [rank],
+    university,
+    international_students_ratio,
+    [total_students] = 1 / international_students_ratio
+FROM (
+    SELECT 
+        [rank],
+        university,
+        international_students_ratio,
+        ROW_NUMBER() OVER (ORDER BY international_students_ratio DESC) AS RowNum
+    FROM 
+        [dbo].[top 100 world university 2024]
+    WHERE 
+        international_students_ratio IS NOT NULL
+) AS RankedUniversities
+WHERE 
+    RowNum <= 5;
+
+
+Q5.:(Another Student) I am an artist in the music industry and I want to collaborate with someone in order to reach a more diverse audience. What were the top 5 most popular songs and who were all the artists that were involved in the making of those songs?
+
+
+USE [EC_IT143_DA]
+GO
+
+SELECT TOP 5
+    A1.[artist] AS Artist1,
+    A2.[artist] AS Artist2,
+    A1.[collab_songs] AS CollabSongs,
+    A1.[type] AS CollaborationType,
+    A1.[genres] AS Genres
+FROM
+    [dbo].[artists] AS A1
+INNER JOIN
+    [dbo].[collaborations] AS C ON A1.[artist] = C.[artist1]
+INNER JOIN
+    [dbo].[artists] AS A2 ON C.[artist2] = A2.[artist]
+ORDER BY
+    A1.[collab_songs] DESC;
+
+Q6.:(Me) I work as a marketing chief for Sony music. Over the past two years we have
+been trying get to know more about artists who collaborate. Who are the top 5
+artists with the most collaborations in the dataset, and what songs did they
+collaborate on?
+
+A6.:
+
+USE [EC_IT143_DA]
+GO
+
+SELECT TOP 5
+    [artist],
+    [collab_songs],
+    [type],
+    [genres],
+    [collab_individuals],
+    [country]
+FROM
+    [dbo].[artists]
+ORDER BY
+    [collab_songs] DESC;
+
+
+
+
+Q6.:(Me) Traveling is something spectacular, traveling with music is beyond that.
+Explore the geographical distribution of artists involved in collaborations. Are
+there regional preferences or disparities in the dataset?
+
+A6.:
+
+
+USE [EC_IT143_DA]
+GO
+
+SELECT
+    [country],
+    COUNT(*) AS NumCollaborations
+FROM
+    [dbo].[artists]
+GROUP BY
+    [country]
+ORDER BY
+    NumCollaborations DESC;
+
+
+Q7.:(Me) Having sucess on charts is something that everybody would love to have, so when you are
+producing music you always expect the highest success to it. Identify the top 5 most popular genres and who sang them
+
+A7.:
+
+SELECT TOP 5 
+       genres AS Genre,
+       SUM(collab_songs) AS Total_Songs,
+       STRING_AGG(artist, ', ') AS Artists
+FROM dbo.artists
+GROUP BY genres
+ORDER BY Total_Songs DESC;
+
+Q8.: Among the top 100 universities in the world in 2024, which universities have the highest ratio of international students to total students, and what are these ratios?
+
+A8.:
+
+SELECT TOP 5
+    [rank],
+    university,
+    international_students_ratio,
+    [total_students] = 1 / international_students_ratio
+FROM (
+    SELECT 
+        [rank],
+        university,
+        international_students_ratio,
+        ROW_NUMBER() OVER (ORDER BY international_students_ratio DESC) AS RowNum
+    FROM 
+        [dbo].[top 100 world university 2024]
+    WHERE 
+        international_students_ratio IS NOT NULL
+) AS RankedUniversities
+WHERE 
+    RowNum <= 5;
+
+
+
+
+
