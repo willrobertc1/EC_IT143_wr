@@ -1,0 +1,19 @@
+Create_Customer_Territory_Index_Including_Details"
+
+SELECT cu. *
+FROM Sales.Customer as cu
+WHERE cu.TerritoryID = 4;
+
+
+/*
+Missing Index Details from SQLQuery6.sql - WILLIAM.AdventureWorks2019 (WILLIAM\willi (64))
+The Query Processor estimates that implementing the following index could improve the query cost by 87.6677%.
+*/
+
+
+USE [AdventureWorks2019]
+GO
+CREATE NONCLUSTERED INDEX [IX_Customer_TerritoryID_Includes]
+ON [Sales].[Customer] ([TerritoryID])
+INCLUDE ([PersonID],[StoreID],[AccountNumber],[rowguid],[ModifiedDate])
+GO
