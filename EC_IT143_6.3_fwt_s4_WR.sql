@@ -1,4 +1,12 @@
-Step 4 - Research and test a solution
+Step 4 - Create an after-update trigger
 
-SELECT 
-    LEFT('Diego Roel', CHARINDEX(' ', 'Diego Roel' + ' ') - 1) AS InitialName;
+CREATE TRIGGER TriggerCreatedANDUpdated
+ON SpiceGirls
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE SpiceGirls
+    SET lm = GETDATE()
+    FROM SpiceGirls AS c
+    JOIN inserted AS i ON c.SpiceGirlID = i.SpiceGirlID;
+END;

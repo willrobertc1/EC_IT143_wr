@@ -1,6 +1,7 @@
-Step 3 - Create an Ad Hoc SQL query
+Step 3 - Research and test a solution
 
-SELECT 
-    LEFT(ContactName, CHARINDEX(' ', ContactName + ' ') - 1) AS InitialName
-FROM 
-    dbo.v_w3_schools_customers;
+https://stackoverflow.com/questions/998240/how-to-keep-a-track-of-last-modified-time
+
+ALTER TABLE SpiceGirls
+ADD lm DATETIME DEFAULT GETDATE();
+
